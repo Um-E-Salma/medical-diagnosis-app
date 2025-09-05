@@ -3,15 +3,23 @@ mlflowvenv/
 venv/
 .env/
 .venv/
+env/
+ENV/
+env.bak/
+venv.bak/
 
 # Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.py[codz]
+*$py.class
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
+profile_default/
+ipython_config.py
 
 # MLflow artifacts and logs
 mlruns/
@@ -23,7 +31,7 @@ mlruns/
 *.dvc
 *.dvc.lock
 
-# Data files (raw/processed, optional — agar aap Git LFS use nahi kar rahe)
+# Data files
 data/
 *.csv
 *.tsv
@@ -38,14 +46,139 @@ data/
 
 # Logs
 *.log
+pip-log.txt
+pip-delete-this-directory.txt
 
-# System / IDE files
-.DS_Store
-Thumbs.db
-.vscode/
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.cover
+*.py.cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff
+instance/
+.webassets-cache
+
+# Scrapy stuff
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# pyenv
+# .python-version
+
+# pipenv / poetry / pdm / uv
+#Pipfile.lock
+#poetry.lock
+#poetry.toml
+#pdm.lock
+#pdm.toml
+.pdm-python
+.pdm-build/
+#uv.lock
+#pixi.lock
+.pixi
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath
+*.sage.py
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Rope
+.ropeproject
+
+# mkdocs
+/site
+
+# mypy / pytype / pyre
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+
+# Cython debug
+cython_debug/
+
+# PyCharm
 .idea/
 
-# Build and dist
-build/
-dist/
-*.egg-info/
+# VS Code
+.vscode/
+
+# Abstra
+.abstra/
+
+# Ruff
+.ruff_cache/
+
+# PyPI
+.pypirc
+
+# Cursor
+.cursorignore
+.cursorindexingignore
+
+# Marimo
+marimo/_static/
+marimo/_lsp/
+__marimo__/
+
+# System files
+.DS_Store
+Thumbs.db
