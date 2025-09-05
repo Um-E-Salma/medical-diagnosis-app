@@ -1,0 +1,51 @@
+# Virtual environments
+mlflowvenv/
+venv/
+.env/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# MLflow artifacts and logs
+mlruns/
+*.db
+
+# DVC cache and lock files
+.cache/
+.dvc/
+*.dvc
+*.dvc.lock
+
+# Data files (raw/processed, optional — agar aap Git LFS use nahi kar rahe)
+data/
+*.csv
+*.tsv
+*.parquet
+
+# Model artifacts
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.onnx
+
+# Logs
+*.log
+
+# System / IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Build and dist
+build/
+dist/
+*.egg-info/

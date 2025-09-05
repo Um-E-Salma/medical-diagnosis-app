@@ -1,0 +1,14 @@
+data_ingestion:
+  test_size: 0.2   # 20% test split, aap chahe to 0.25 bhi rakh sakte hain
+
+data_preprocessing:
+  target_column: "HeartDisease"   # preprocessing.py ke liye
+
+model_building:
+  n_estimators: 100    # RandomForest ke number of trees
+  random_state: 42     # reproducibility ke liye seed
+
+model_evaluation:
+  experiment_name: "dvc-pipeline-runs"   # mlflow experiment name
+  tracking_uri: "http://ec2-16-16-192-128.eu-north-1.compute.amazonaws.com:5000/"
+  model_name: "heart_disease_model"      # register_model.py ke liye
