@@ -28,7 +28,7 @@ mlruns/
 # DVC cache and lock files
 .cache/
 !.dvc/
-*.dvc
+**/*.dvc
 *.dvc.lock
 
 
