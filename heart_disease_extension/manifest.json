@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Heart Disease Risk Predictor",
+  "version": "1.0",
+  "description": "Predicts heart disease risk based on medical parameters using ML model.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "http://localhost/*",
+    "https://localhost/*"
+  ]
+}

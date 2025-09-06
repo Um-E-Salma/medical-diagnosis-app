@@ -1,3 +1,8 @@
+# Git and version control
+.git/
+.gitignore
+.gitattributes
+
 # Virtual environments
 mlflowvenv/
 venv/
@@ -28,18 +33,16 @@ mlruns/
 # DVC cache and lock files
 .cache/
 *.dvc.lock
-!.dvc/
+.dvc/cache/
 */*.dvc
 
-
-
-# Data files
+# Data files (large datasets)
 data/
 *.csv
 *.tsv
 *.parquet
 
-# Model artifacts
+# Model artifacts (will be loaded from MLflow or local)
 *.pkl
 *.joblib
 *.h5
@@ -50,6 +53,10 @@ data/
 *.log
 pip-log.txt
 pip-delete-this-directory.txt
+
+# Generated files from ML pipeline
+/experiment_info.json
+/confusion_matrix_HeartDisease_Test.png
 
 # Distribution / packaging
 .Python
@@ -112,19 +119,9 @@ docs/_build/
 .pybuilder/
 target/
 
-# pyenv
-# .python-version
-
 # pipenv / poetry / pdm / uv
-#Pipfile.lock
-#poetry.lock
-#poetry.toml
-#pdm.lock
-#pdm.toml
 .pdm-python
 .pdm-build/
-#uv.lock
-#pixi.lock
 .pixi
 
 # PEP 582
@@ -157,19 +154,13 @@ dmypy.json
 # Cython debug
 cython_debug/
 
-# PyCharm
+# IDEs
 .idea/
-
-# VS Code
 .vscode/
 
-# Abstra
+# Tools
 .abstra/
-
-# Ruff
 .ruff_cache/
-
-# PyPI
 .pypirc
 
 # Cursor
@@ -184,5 +175,35 @@ __marimo__/
 # System files
 .DS_Store
 Thumbs.db
-/experiment_info.json
-/confusion_matrix_HeartDisease_Test.png
+
+# Docker files themselves
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+
+# Documentation
+README.md
+*.md
+docs/
+
+# Development and testing files
+tests/
+test_*
+*_test.py
+
+# Chrome extension files (if present)
+manifest.json
+popup.html
+popup.js
+icons/
+
+# Environment and secrets
+.env*
+*.pem
+*.key
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp

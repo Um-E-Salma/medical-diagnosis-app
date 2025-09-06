@@ -1,0 +1,108 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data/data_ingestion.py
+    deps:
+    - path: src/data/data_ingestion.py
+      hash: md5
+      md5: a8016395e3a141e81544c5d23967549c
+      size: 4282
+    params:
+      params.yaml:
+        data_ingestion.test_size: 0.2
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 73da1cdb49df823788cc618b3d194d83.dir
+      size: 38097
+      nfiles: 2
+  data_preprocessing:
+    cmd: python src/data/data_preprocessing.py
+    deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: dada5ccaccd43db457c63000daa4cf63
+      size: 7674
+    - path: data/raw/train.csv
+      hash: md5
+      md5: 68f9330b8bfc96c1b20cb7bc4283affe
+      size: 30423
+    - path: src/data/data_preprocessing.py
+      hash: md5
+      md5: f1e9fc408223931918c9193f97d1b4a6
+      size: 8138
+    params:
+      params.yaml:
+        data_preprocessing.target_column: HeartDisease
+    outs:
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: f71b6e195afb93fec74724160677cff7
+      size: 20881
+    - path: data/processed/train_processed.csv
+      hash: md5
+      md5: 0b4d7367321e2d560fe10c40918066c3
+      size: 83014
+  model_building:
+    cmd: python src/model/model_building.py
+    deps:
+    - path: data/processed/train_processed.csv
+      hash: md5
+      md5: 0b4d7367321e2d560fe10c40918066c3
+      size: 83014
+    - path: src/model/model_building.py
+      hash: md5
+      md5: ebd0884e181c8454f22dd5d72e7d29cd
+      size: 4225
+    params:
+      params.yaml:
+        model_building.n_estimators: 100
+        model_building.random_state: 42
+    outs:
+    - path: rf_model.pkl
+      hash: md5
+      md5: 6d0255531ccb72b5d9557f4445e1c699
+      size: 1691341
+  model_evaluation:
+    cmd: python src/model/model_evaluation.py
+    deps:
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: f71b6e195afb93fec74724160677cff7
+      size: 20881
+    - path: rf_model.pkl
+      hash: md5
+      md5: 6d0255531ccb72b5d9557f4445e1c699
+      size: 1691341
+    - path: src/model/model_evaluation.py
+      hash: md5
+      md5: e6d6225943535611bfb5cbe60ca63d24
+      size: 5954
+    params:
+      params.yaml:
+        model_evaluation.experiment_name: dvc-pipeline-runs
+        model_evaluation.tracking_uri: 
+          http://ec2-16-16-192-128.eu-north-1.compute.amazonaws.com:5000/
+    outs:
+    - path: confusion_matrix_HeartDisease_Test.png
+      hash: md5
+      md5: a4c5a674a26a1e9063fc7cadd0da04f3
+      size: 17996
+    - path: experiment_info.json
+      hash: md5
+      md5: 4d210a4e3f3476b85ca83a902cc95315
+      size: 88
+  register_model:
+    cmd: python src/model/register_model.py
+    deps:
+    - path: experiment_info.json
+      hash: md5
+      md5: 4d210a4e3f3476b85ca83a902cc95315
+      size: 88
+    - path: src/model/register_model.py
+      hash: md5
+      md5: 02e3ac28b1682033a04caa88cf98d536
+      size: 2577
+    params:
+      params.yaml:
+        model_evaluation.model_name: heart_disease_model

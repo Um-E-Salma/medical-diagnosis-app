@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Heart Disease Risk Predictor</title>
+  <style>
+    /* Dark Theme */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 15px;
+      background-color: #1e1e1e;
+      color: #f1f1f1;
+      margin: 0;
+      box-sizing: border-box;
+      width: 400px; /* Wider for form fields */
+      max-height: 600px;
+      overflow-y: auto;
+    }
+    
+    h1 {
+      font-size: 20px;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .form-section {
+      margin-bottom: 20px;
+    }
+    
+    .section-title {
+      font-weight: bold;
+      color: #ff6b6b;
+      margin-bottom: 15px;
+      font-size: 16px;
+      border-bottom: 2px solid #ff6b6b;
+      padding-bottom: 5px;
+    }
+    
+    .form-group {
+      margin-bottom: 12px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #cccccc;
+      font-size: 13px;
+    }
+    
+    input[type="number"], select {
+      width: 100%;
+      padding: 8px;
+      background-color: #333;
+      border: 1px solid #555;
+      border-radius: 4px;
+      color: #f1f1f1;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    
+    input[type="number"]:focus, select:focus {
+      outline: none;
+      border-color: #ff6b6b;
+    }
+    
+    .predict-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background-color 0.3s;
+    }
+    
+    .predict-btn:hover {
+      background-color: #ff5252;
+    }
+    
+    .predict-btn:disabled {
+      background-color: #666;
+      cursor: not-allowed;
+    }
+    
+    .results-section {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #2a2a2a;
+      border-radius: 8px;
+      border-left: 4px solid #ff6b6b;
+    }
+    
+    .risk-indicator {
+      text-align: center;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    
+    .low-risk {
+      background-color: #2d5a2d;
+      color: #90ee90;
+      border: 2px solid #4caf50;
+    }
+    
+    .high-risk {
+      background-color: #5a2d2d;
+      color: #ff9090;
+      border: 2px solid #f44336;
+    }
+    
+    .confidence-bars {
+      margin: 15px 0;
+    }
+    
+    .confidence-bar {
+      margin: 8px 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .confidence-label {
+      width: 80px;
+      font-size: 12px;
+    }
+    
+    .confidence-progress {
+      flex: 1;
+      height: 20px;
+      background-color: #444;
+      border-radius: 10px;
+      margin: 0 10px;
+      overflow: hidden;
+    }
+    
+    .confidence-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+    
+    .confidence-value {
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .loading {
+      text-align: center;
+      color: #ff6b6b;
+      margin: 20px 0;
+    }
+    
+    .error {
+      background-color: #5a2d2d;
+      color: #ff9090;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+      border: 1px solid #f44336;
+    }
+    
+    .disclaimer {
+      background-color: #3d3d3d;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 15px;
+      font-size: 11px;
+      color: #cccccc;
+      border-left: 3px solid #ffa726;
+    }
+    
+    .chart-container {
+      text-align: center;
+      margin: 15px 0;
+    }
+    
+    .chart-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>❤️ Heart Disease Risk Predictor</h1>
+  
+  <div class="form-section">
+    <div class="section-title">Patient Information</div>
+    
+    <div class="form-group">
+      <label for="age">Age (years):</label>
+      <input type="number" id="age" min="1" max="120" placeholder="e.g., 45">
+    </div>
+    
+    <div class="form-group">
+      <label for="sex">Sex:</label>
+      <select id="sex">
+        <option value="">Select...</option>
+        <option value="0">Female</option>
+        <option value="1">Male</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="chestPainType">Chest Pain Type:</label>
+      <select id="chestPainType">
+        <option value="">Select...</option>
+        <option value="0">Typical Angina</option>
+        <option value="1">Atypical Angina</option>
+        <option value="2">Non-Anginal Pain</option>
+        <option value="3">Asymptomatic</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="restingBP">Resting Blood Pressure (mmHg):</label>
+      <input type="number" id="restingBP" min="50" max="250" placeholder="e.g., 120">
+    </div>
+    
+    <div class="form-group">
+      <label for="cholesterol">Cholesterol (mg/dl):</label>
+      <input type="number" id="cholesterol" min="100" max="600" placeholder="e.g., 200">
+    </div>
+    
+    <div class="form-group">
+      <label for="fastingBS">Fasting Blood Sugar > 120 mg/dl:</label>
+      <select id="fastingBS">
+        <option value="">Select...</option>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="restingECG">Resting ECG Results:</label>
+      <select id="restingECG">
+        <option value="">Select...</option>
+        <option value="0">Normal</option>
+        <option value="1">ST-T Wave Abnormality</option>
+        <option value="2">Left Ventricular Hypertrophy</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="maxHR">Maximum Heart Rate Achieved:</label>
+      <input type="number" id="maxHR" min="60" max="220" placeholder="e.g., 150">
+    </div>
+    
+    <div class="form-group">
+      <label for="exerciseAngina">Exercise Induced Angina:</label>
+      <select id="exerciseAngina">
+        <option value="">Select...</option>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="oldpeak">ST Depression (Oldpeak):</label>
+      <input type="number" id="oldpeak" min="0" max="10" step="0.1" placeholder="e.g., 1.5">
+    </div>
+    
+    <div class="form-group">
+      <label for="stSlope">ST Slope:</label>
+      <select id="stSlope">
+        <option value="">Select...</option>
+        <option value="0">Upsloping</option>
+        <option value="1">Flat</option>
+        <option value="2">Downsloping</option>
+      </select>
+    </div>
+    
+    <button class="predict-btn" id="predictBtn">Predict Risk</button>
+  </div>
+  
+  <div id="results" style="display: none;"></div>
+  
+  <div class="disclaimer">
+    <strong>⚠️ Medical Disclaimer:</strong> This tool is for educational purposes only and should not replace professional medical advice. Always consult with a healthcare professional for medical decisions.
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
