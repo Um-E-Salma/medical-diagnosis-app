@@ -105,7 +105,7 @@ jobs:
 
       - name: Stop and remove container if running
         run: |
-          docker ps -q --filter "name=medical-diagnosis-app" | grep -q . && docker stop name=medical-diagnosis-app && docker rm -fv name=medical-diagnosis-app || echo "Container not running"
+          docker ps -q --filter "name=medical-diagnosis-app" | grep -q . && docker stop medical-diagnosis-app && docker rm -fv medical-diagnosis-app || echo "Container not running"
 
       - name: Run Docker Image to serve users
         run: |
